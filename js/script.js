@@ -1,26 +1,30 @@
 const missionsData = [
     {
         id: "mission-1",
-        title: "Mission 01: Phishing Detective",
+        title: "CASE 01: Phishing Intel",
         description: "Analyze the intercepted communication and identify the primary indicator of compromise.",
-        scenario: "From: security@paypal-support-urgent.com\nTo: admin@cyberquest.net\nDate: Oct 10, 2026\nSubject: URGENT: Your Account Will Be Suspended\n\nDear Customer,\nWe detected suspicious logins on your account. To prevent immediate suspension, you must verify your identity within 2 hours.\n\nClick here to verify: http://secure-auth-paypal.com/login\n\nFailure to comply will result in account deletion.\n- Security Team",
+        scenario: "From: security@paypal-support-urgent.com\nTo: admin@cyberquest.net\nSubject: URGENT: Your Account Will Be Suspended\n\nDear Customer,\nWe detected suspicious logins. Verify identity within 2 hours: http://secure-auth-paypal.com/login",
         options: [
-            "The email uses a generic greeting ('Dear Customer').",
-            "The sender's domain and the verification link are fraudulent.",
-            "The email demands urgent action within 2 hours.",
+            "The generic greeting.",
+            "Fraudulent sender domain and URL.",
+            "Urgent action demanded.",
             "All of the above."
         ],
         correctAnswer: 3,
-        hint: "Phishing attacks often combine a false sense of urgency with deceptive URLs that mimic legitimate services.",
-        explanation: "This is a classic phishing attack. It uses a fake sender domain (paypal-support-urgent.com), an unencrypted fraudulent link (http://secure-auth-paypal.com), a generic greeting, and false urgency to panic the victim into revealing credentials. Therefore, all options are correct.",
+        hint: "Phishing combines urgency with deceptive URLs.",
+        explanation: "Fake domain, unencrypted HTTP link, generic greeting, and false urgency. All are classic signs.",
         reward: 500,
-        icon: '<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>'
+        inspectData: {
+            "headers": "X-Originating-IP: 185.15.xx.xx (suspicious proxy)\nDKIM-Signature: FAIL",
+            "url": "Resolved URL: http://192.168.x.x/payload.exe (MALWARE DETECTED)",
+            "sender": "Domain registered 2 days ago. Registrar: Unknown."
+        }
     },
     {
         id: "mission-2",
-        title: "Mission 02: Password Guardians",
-        description: "The mainframe needs a new master override password. Select the most secure option to prevent a brute-force breach.",
-        scenario: "System Prompt:\nENTER NEW MASTER PASSWORD.\nREQUIREMENTS: Strong resistance to dictionary attacks and brute-force tools.",
+        title: "CASE 02: Auth Defense",
+        description: "Select the most secure master password option to prevent a brute-force breach.",
+        scenario: "System Prompt:\nENTER NEW MASTER PASSWORD.\nREQUIREMENTS: Strong resistance to dictionary attacks.",
         options: [
             "Admin_2026!",
             "CorrectHorseBatteryStaple",
@@ -28,16 +32,21 @@ const missionsData = [
             "P@ssw0rd123"
         ],
         correctAnswer: 2,
-        hint: "A strong password avoids common dictionary words entirely and utilizes a mix of uppercase, lowercase, numbers, and symbols.",
-        explanation: "'c@tB0ard$kYw@lk3r99' is the most secure because it combines multiple character types, does not form predictable dictionary words, and has sufficient length. 'CorrectHorseBatteryStaple' is long but uses common words (susceptible to advanced dictionary attacks). 'Admin_2026!' and 'P@ssw0rd123' are highly predictable.",
+        hint: "Avoid dictionary words completely. Mix case, numbers, symbols.",
+        explanation: "High entropy, no dictionary words, sufficient length. Immune to standard dictionary attacks.",
         reward: 1000,
-        icon: '<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>'
+        inspectData: {
+            "admin": "Length: 11. Est. crack time: 2 hours.",
+            "correcthorse": "Length: 25. Dictionary words: 4. Est crack time: 50 years.",
+            "catboard": "Length: 19. High entropy. No dictionary words. Est crack time: 2 trillion years.",
+            "password": "Found in top 100 common passwords leak."
+        }
     },
     {
         id: "mission-3",
-        title: "Mission 03: Cipher Breaker",
-        description: "We've intercepted encrypted hostile comms. Decrypt the message using a Caesar Cipher with a Shift of 3.",
-        scenario: "INTERCEPTED TRANSMISSION:\nENCRYPTION: CAESAR SHIFT +3\n\nCIPHERTEXT: KHOOR ZRUOG",
+        title: "CASE 03: Crypto Analysis",
+        description: "Decrypt the intercepted message. Cipher detected: Caesar Shift +3.",
+        scenario: "INTERCEPTED TRANSMISSION:\nCIPHERTEXT: KHOOR ZRUOG",
         options: [
             "HELLO WORLD",
             "HACKER SPACE",
@@ -45,31 +54,40 @@ const missionsData = [
             "CYBER QUEST"
         ],
         correctAnswer: 0,
-        hint: "A Caesar Shift of +3 means the original letter was moved 3 spaces forward. To decode, move 3 spaces backward (e.g., D becomes A).",
-        explanation: "By shifting each letter back 3 positions in the alphabet, 'K' becomes 'H', 'H' becomes 'E', 'O' becomes 'L', 'O' becomes 'L', and 'R' becomes 'O'. The space remains a space. 'ZRUOG' similarly translates to 'WORLD'.",
+        hint: "Shift +3 means move 3 spaces backward to decode (e.g., D becomes A).",
+        explanation: "K(-3)=H, H(-3)=E, O(-3)=L, R(-3)=O. ZRUOG translates to WORLD.",
         reward: 1500,
-        icon: '<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>'
+        inspectData: {
+            "cipher": "Algorithm: Substitution. Type: Caesar Shift. Offset: +3.",
+            "khoor": "Shift -3 applied -> H E L L O",
+            "zruog": "Shift -3 applied -> W O R L D"
+        }
     },
     {
         id: "mission-4",
-        title: "Mission 04: Network Investigator",
-        description: "Review the firewall access logs and identify the entry that indicates a potential attack.",
-        scenario: "FIREWALL LOG EXCERPT:\n[10:14:01] INFO: 192.168.1.45 -> 10.0.0.5:443 (Allowed)\n[10:14:05] INFO: 192.168.1.12 -> 10.0.0.8:80 (Allowed)\n[10:14:08] WARN: 203.0.113.42 -> 10.0.0.5:22 (500 failed login attempts in 60s)\n[10:14:15] INFO: 10.0.0.5 -> 8.8.8.8:53 (Allowed)",
+        title: "CASE 04: Log Audit",
+        description: "Review firewall logs. Identify the entry indicating a potential attack.",
+        scenario: "FIREWALL LOG EXCERPT:\n[10:14:01] 192.168.1.45 -> 10.0.0.5:443 (Allowed)\n[10:14:05] 192.168.1.12 -> 10.0.0.8:80 (Allowed)\n[10:14:08] 203.0.113.42 -> 10.0.0.5:22 (500 failed logins in 60s)\n[10:14:15] 10.0.0.5 -> 8.8.8.8:53 (Allowed)",
         options: [
-            "The HTTPS connection on port 443.",
-            "The HTTP connection on port 80.",
-            "The 500 failed login attempts on port 22.",
-            "The DNS query to 8.8.8.8 on port 53."
+            "HTTPS on port 443.",
+            "HTTP on port 80.",
+            "500 failed logins on port 22.",
+            "DNS query to 8.8.8.8."
         ],
         correctAnswer: 2,
-        hint: "Look for unusually high activity on remote administration ports that indicates guessing credentials.",
-        explanation: "500 failed login attempts in 60 seconds on Port 22 (SSH) is a clear indicator of a brute-force attack. The attacker is trying to guess the username and password to gain remote administrative access to the server. The other logs are standard network traffic.",
+        hint: "High failure rate on remote administration ports (SSH).",
+        explanation: "500 failed logins in 60s on Port 22 indicates an active SSH brute-force attack.",
         reward: 2000,
-        icon: '<svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>'
+        inspectData: {
+            "port 443": "Standard HTTPS web traffic. Normal volume.",
+            "port 80": "Standard HTTP web traffic. Normal volume.",
+            "port 22": "SSH Protocol. Critical alert: Anomalous login failure rate.",
+            "203.0.113.42": "IP flagged in external Threat Intel feeds. Origin: Proxy network."
+        }
     }
 ];
 
-const INITIAL_TIME = 600; // 10 minutes in seconds
+const INITIAL_TIME = 600;
 const INITIAL_HINTS = 3;
 
 let gameState = {
@@ -81,23 +99,36 @@ let gameState = {
     timeLeft: INITIAL_TIME,
     timerInterval: null,
     isGameOver: false,
-    timerStarted: false
+    timerStarted: false,
+    soundEnabled: false
 };
 
-// DOM Elements
+// Audio Context (Mocked for browser safety without external assets)
+const playBeep = (type = 'keypress') => {
+    if (!gameState.soundEnabled) return;
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        if (type === 'keypress') { osc.frequency.value = 800; gain.gain.value = 0.05; osc.start(); osc.stop(ctx.currentTime + 0.05); }
+        if (type === 'success') { osc.frequency.value = 1200; gain.gain.value = 0.1; osc.start(); osc.stop(ctx.currentTime + 0.1); }
+        if (type === 'error') { osc.frequency.value = 300; gain.gain.value = 0.1; osc.type = 'square'; osc.start(); osc.stop(ctx.currentTime + 0.2); }
+    } catch (e) {}
+};
+
+// DOM
 const dashboardView = document.getElementById('dashboard-view');
 const gameView = document.getElementById('game-view');
 const resultView = document.getElementById('result-view');
 const missionsGrid = document.getElementById('missions-grid');
 
-// Nav Stats
 const navScore = document.getElementById('nav-score');
 const navBestScore = document.getElementById('nav-best-score');
 const navHints = document.getElementById('nav-hints');
 const navTime = document.getElementById('nav-time');
-const navTimeContainer = navTime.parentElement;
 
-// Game Elements
 const missionProgress = document.getElementById('mission-progress');
 const missionTitle = document.getElementById('mission-title');
 const missionDesc = document.getElementById('mission-desc');
@@ -110,14 +141,16 @@ const feedbackContainer = document.getElementById('feedback-container');
 const feedbackTitle = document.getElementById('feedback-title');
 const feedbackText = document.getElementById('feedback-text');
 
-// Buttons
 const startMissionBtn = document.getElementById('start-mission-btn');
-const terminalOutput = document.getElementById('terminal-output');
 const btnHint = document.getElementById('btn-hint');
 const btnSubmit = document.getElementById('btn-submit');
 const btnNext = document.getElementById('btn-next');
 const btnDashboard = document.getElementById('btn-dashboard');
 const btnRestart = document.getElementById('btn-restart');
+
+// Terminal Elements
+const terminalInput = document.getElementById('terminal-input');
+const terminalOutputArea = document.getElementById('terminal-output-area');
 
 let selectedOptionIndex = null;
 
@@ -125,16 +158,36 @@ document.addEventListener('DOMContentLoaded', () => {
     loadBestScore();
     initDashboard();
 
-    startMissionBtn.addEventListener('click', () => {
-        if (!gameState.timerStarted) startGlobalTimer();
-        startTerminalSequence(() => startGame(gameState.unlockedIndex));
+    document.getElementById('toggle-sound').addEventListener('click', () => {
+        gameState.soundEnabled = !gameState.soundEnabled;
+        document.querySelector('.btn-text').textContent = `AUDIO: ${gameState.soundEnabled ? 'ON' : 'OFF'}`;
     });
 
-    btnHint.addEventListener('click', showHint);
-    btnSubmit.addEventListener('click', submitAnswer);
-    btnNext.addEventListener('click', loadNextMission);
-    btnDashboard.addEventListener('click', returnToDashboard);
-    btnRestart.addEventListener('click', resetGameEntirely);
+    startMissionBtn.addEventListener('click', () => {
+        playBeep('keypress');
+        if (!gameState.timerStarted) startGlobalTimer();
+        startGame(gameState.unlockedIndex);
+    });
+
+    btnHint.addEventListener('click', () => { playBeep('keypress'); showHint(); });
+    btnSubmit.addEventListener('click', () => { submitAnswer(); });
+    btnNext.addEventListener('click', () => { playBeep('keypress'); loadNextMission(); });
+    btnDashboard.addEventListener('click', () => { playBeep('keypress'); returnToDashboard(); });
+    btnRestart.addEventListener('click', () => { playBeep('keypress'); resetGameEntirely(); });
+
+    // Terminal Input
+    terminalInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const cmd = terminalInput.value.trim();
+            if (cmd) {
+                playBeep('keypress');
+                handleTerminalCommand(cmd);
+                terminalInput.value = '';
+                // scroll to bottom
+                terminalOutputArea.scrollTop = terminalOutputArea.scrollHeight;
+            }
+        }
+    });
 });
 
 function loadBestScore() {
@@ -153,6 +206,18 @@ function saveBestScore() {
 function updateNavStats() {
     navScore.textContent = gameState.score.toString().padStart(4, '0');
     navHints.textContent = gameState.hintsRemaining;
+    updateTimeline();
+}
+
+function updateTimeline() {
+    const timelineList = document.getElementById('timeline-list');
+    if (!timelineList) return;
+    const items = timelineList.querySelectorAll('.timeline-item');
+    items.forEach((item, idx) => {
+        item.className = 'timeline-item';
+        if (gameState.completedMissions.includes(idx)) item.classList.add('completed');
+        else if (idx === gameState.currentMissionIndex && gameView.classList.contains('hidden') === false) item.classList.add('active');
+    });
 }
 
 function startGlobalTimer() {
@@ -178,16 +243,9 @@ function updateTimerDisplay() {
     const m = Math.floor(gameState.timeLeft / 60);
     const s = gameState.timeLeft % 60;
     navTime.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-
-    if (gameState.timeLeft <= 60) {
-        navTimeContainer.classList.add('danger');
-        navTimeContainer.classList.remove('warning');
-    } else if (gameState.timeLeft <= 180) {
-        navTimeContainer.classList.add('warning');
-        navTimeContainer.classList.remove('danger');
-    } else {
-        navTimeContainer.classList.remove('warning', 'danger');
-    }
+    
+    if (gameState.timeLeft <= 60) navTime.classList.add('warning');
+    else navTime.classList.remove('warning');
 }
 
 function initDashboard() {
@@ -198,31 +256,21 @@ function initDashboard() {
     missionsData.forEach((mission, index) => {
         const isCompleted = gameState.completedMissions.includes(index);
         const isUnlocked = index <= gameState.unlockedIndex;
-        
-        let statusClass = 'locked';
-        let statusText = 'LOCKED';
-        
-        if (isCompleted) {
-            statusClass = 'completed'; statusText = 'COMPLETED';
-        } else if (isUnlocked) {
-            statusClass = 'available'; statusText = 'AVAILABLE';
-        }
+        let statusClass = isCompleted ? 'completed' : (isUnlocked ? 'available' : 'locked');
+        let statusText = isCompleted ? 'COMPLETED' : (isUnlocked ? 'AVAILABLE' : 'LOCKED');
 
         const card = document.createElement('div');
-        card.className = `mission-card ${statusClass}`;
+        card.className = `mission-row ${statusClass}`;
         card.innerHTML = `
-            <div class="card-status ${statusClass}">${statusText}</div>
-            <div class="card-icon">${mission.icon}</div>
-            <h3 class="card-title">${mission.title}</h3>
-            <p class="card-desc">${mission.description}</p>
-            <div class="card-meta">
-                <span>Difficulty: ${['Low', 'Medium', 'High', 'Expert'][index]}</span>
-                <span>Reward: ${mission.reward} XP</span>
+            <div class="mission-info">
+                <h4>${mission.title}</h4>
+                <p>Reward: ${mission.reward} XP</p>
             </div>
+            <div class="status-badge ${statusClass}">${statusText}</div>
         `;
-
         if (isUnlocked && !gameState.isGameOver) {
             card.addEventListener('click', () => {
+                playBeep('keypress');
                 if (!gameState.timerStarted) startGlobalTimer();
                 startGame(index);
             });
@@ -231,42 +279,20 @@ function initDashboard() {
     });
 
     if (gameState.isGameOver) {
-        startMissionBtn.textContent = "SIMULATION ENDED";
+        startMissionBtn.textContent = "OPERATION CONCLUDED";
         startMissionBtn.disabled = true;
     } else if (gameState.completedMissions.length === missionsData.length) {
-        startMissionBtn.textContent = "VIEW FINAL RESULTS";
+        startMissionBtn.textContent = "VIEW FINAL DEBRIEF";
         startMissionBtn.onclick = () => endGame("completed");
     } else {
-        startMissionBtn.textContent = "INITIALIZE MISSION";
+        startMissionBtn.textContent = "AUTHORIZE OPERATION";
         startMissionBtn.disabled = false;
         startMissionBtn.onclick = () => {
+            playBeep('keypress');
             if (!gameState.timerStarted) startGlobalTimer();
-            startTerminalSequence(() => startGame(gameState.unlockedIndex));
+            startGame(gameState.unlockedIndex);
         };
     }
-}
-
-function startTerminalSequence(callback) {
-    startMissionBtn.textContent = "INITIALIZING...";
-    startMissionBtn.style.pointerEvents = "none";
-    let dots = 0;
-    terminalOutput.innerHTML = "> Establishing secure connection...";
-    terminalOutput.style.color = "var(--success-color)";
-    
-    const interval = setInterval(() => {
-        dots = (dots + 1) % 4;
-        terminalOutput.innerHTML = `> Bypassing firewall${'.'.repeat(dots)}`;
-    }, 300);
-
-    setTimeout(() => {
-        clearInterval(interval);
-        terminalOutput.innerHTML = "> Access granted. Initializing environment...";
-        setTimeout(() => {
-            startMissionBtn.style.pointerEvents = "auto";
-            terminalOutput.innerHTML = "> System awaiting input...";
-            callback();
-        }, 800);
-    }, 1500);
 }
 
 function startGame(missionIndex) {
@@ -274,12 +300,14 @@ function startGame(missionIndex) {
     dashboardView.classList.add('hidden');
     resultView.classList.add('hidden');
     gameView.classList.remove('hidden');
+    updateTimeline();
     renderMission();
 }
 
 function returnToDashboard() {
     gameView.classList.add('hidden');
     dashboardView.classList.remove('hidden');
+    updateTimeline();
     initDashboard();
 }
 
@@ -287,12 +315,28 @@ function renderMission() {
     const mission = missionsData[gameState.currentMissionIndex];
     selectedOptionIndex = null;
 
-    missionProgress.textContent = `MISSION ${gameState.currentMissionIndex + 1} / ${missionsData.length}`;
+    missionProgress.textContent = `0${gameState.currentMissionIndex + 1}/04`;
     missionTitle.textContent = mission.title;
     missionDesc.textContent = mission.description;
-    missionScenario.textContent = mission.scenario;
+    
+    // Typewriter effect for scenario
+    missionScenario.innerHTML = '';
+    let i = 0;
+    function typeScenario() {
+        if (i < mission.scenario.length && !gameView.classList.contains('hidden') && gameState.currentMissionIndex === missionsData.indexOf(mission)) {
+            missionScenario.textContent += mission.scenario.charAt(i);
+            i++;
+            setTimeout(typeScenario, 10);
+        }
+    }
+    typeScenario();
+
     gameReward.textContent = `${mission.reward} XP`;
     hintText.textContent = mission.hint;
+
+    // Reset Terminal
+    terminalOutputArea.innerHTML = `<div class="term-line">> Connected to Investigation Node 0${gameState.currentMissionIndex + 1}</div>
+    <div class="term-line">> Type 'help' to list commands. Type 'inspect <target>' to analyze evidence.</div>`;
 
     hintContainer.classList.add('hidden');
     feedbackContainer.classList.add('hidden');
@@ -302,12 +346,7 @@ function renderMission() {
     btnNext.classList.add('hidden');
     
     const isCompleted = gameState.completedMissions.includes(gameState.currentMissionIndex);
-    
-    if (isCompleted || gameState.hintsRemaining <= 0) {
-        btnHint.disabled = true;
-    } else {
-        btnHint.disabled = false;
-    }
+    btnHint.disabled = (isCompleted || gameState.hintsRemaining <= 0);
     btnHint.classList.remove('hidden');
 
     optionsContainer.innerHTML = '';
@@ -315,12 +354,11 @@ function renderMission() {
         const btn = document.createElement('button');
         btn.className = 'option-btn';
         btn.textContent = optText;
-        
         if (isCompleted) {
             btn.disabled = true;
             if (index === mission.correctAnswer) btn.classList.add('correct');
         } else {
-            btn.addEventListener('click', () => selectOption(index, btn));
+            btn.addEventListener('click', () => { playBeep('keypress'); selectOption(index, btn); });
         }
         optionsContainer.appendChild(btn);
     });
@@ -331,6 +369,57 @@ function renderMission() {
         showFeedback(true, true);
         checkIfHasNext();
     }
+}
+
+function handleTerminalCommand(cmd) {
+    printToTerminal(`root@soc:~# ${cmd}`, 'cmd');
+    const parts = cmd.toLowerCase().split(' ');
+    const baseCmd = parts[0];
+    const target = parts.slice(1).join(' ');
+    const mission = missionsData[gameState.currentMissionIndex];
+
+    setTimeout(() => {
+        switch(baseCmd) {
+            case 'help':
+                printToTerminal("COMMANDS: help, status, objectives, inspect [target], clear");
+                break;
+            case 'clear':
+                terminalOutputArea.innerHTML = '';
+                break;
+            case 'status':
+                printToTerminal(`OP_STATUS: ACTIVE | UPTIME: ${INITIAL_TIME - gameState.timeLeft}s`);
+                break;
+            case 'objectives':
+                printToTerminal(`CURRENT_OBJ: ${mission.description}`);
+                break;
+            case 'inspect':
+                if (!target) {
+                    printToTerminal("ERR: target required. Try inspecting words found in the evidence.", 'error');
+                } else {
+                    let found = false;
+                    for (const [key, val] of Object.entries(mission.inspectData)) {
+                        if (target.includes(key) || key.includes(target)) {
+                            printToTerminal(`[ANALYSIS] ${key.toUpperCase()}:`, 'success');
+                            printToTerminal(`  ${val}`);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) printToTerminal(`ERR: No data found for target '${target}'.`, 'error');
+                }
+                break;
+            default:
+                printToTerminal(`ERR: Unknown command '${baseCmd}'`, 'error');
+        }
+        terminalOutputArea.scrollTop = terminalOutputArea.scrollHeight;
+    }, 200);
+}
+
+function printToTerminal(text, className = '') {
+    const div = document.createElement('div');
+    div.className = `term-line ${className}`;
+    div.textContent = text;
+    terminalOutputArea.appendChild(div);
 }
 
 function selectOption(index, btnElement) {
@@ -352,28 +441,24 @@ function showHint() {
 
 function submitAnswer() {
     if (selectedOptionIndex === null) return;
-
     const mission = missionsData[gameState.currentMissionIndex];
     const isCorrect = selectedOptionIndex === mission.correctAnswer;
     const allOptions = document.querySelectorAll('.option-btn');
 
     allOptions.forEach((btn, idx) => {
         btn.disabled = true;
-        if (idx === mission.correctAnswer) {
-            btn.classList.add('correct');
-        } else if (idx === selectedOptionIndex && !isCorrect) {
-            btn.classList.add('incorrect');
-        }
+        if (idx === mission.correctAnswer) btn.classList.add('correct');
+        else if (idx === selectedOptionIndex && !isCorrect) btn.classList.add('incorrect');
     });
 
     btnSubmit.classList.add('hidden');
     btnHint.classList.add('hidden');
     
     if (isCorrect) {
+        playBeep('success');
         if (!gameState.completedMissions.includes(gameState.currentMissionIndex)) {
             gameState.score += mission.reward;
             gameState.completedMissions.push(gameState.currentMissionIndex);
-            
             if (gameState.unlockedIndex === gameState.currentMissionIndex && gameState.unlockedIndex < missionsData.length - 1) {
                 gameState.unlockedIndex++;
             }
@@ -381,14 +466,13 @@ function submitAnswer() {
         }
         showFeedback(true, false);
     } else {
-        // Penalty for incorrect answer
+        playBeep('error');
         if (!gameState.completedMissions.includes(gameState.currentMissionIndex)) {
             gameState.score = Math.max(0, gameState.score - 100);
             updateNavStats();
         }
         showFeedback(false, false);
     }
-
     checkIfHasNext();
 }
 
@@ -398,22 +482,22 @@ function showFeedback(isCorrect, isReview) {
     
     if (isCorrect) {
         feedbackContainer.className = 'feedback-box success';
-        feedbackTitle.textContent = isReview ? "MISSION ACCOMPLISHED" : "ACCESS GRANTED - MISSION ACCOMPLISHED";
+        feedbackTitle.textContent = isReview ? "[DEBRIEF LOGGED]" : "[DECISION CORRECT - ACCESS GRANTED]";
         feedbackText.textContent = mission.explanation;
     } else {
         feedbackContainer.className = 'feedback-box error';
-        feedbackTitle.textContent = "ACCESS DENIED - INCORRECT RESPONSE (-100 XP)";
-        feedbackText.textContent = `Security Breach: Incorrect analysis. ${mission.explanation}`;
+        feedbackTitle.textContent = "[DECISION INCORRECT - 100 XP DEDUCTED]";
+        feedbackText.textContent = `Security Audit Failed. ${mission.explanation}`;
     }
 }
 
 function checkIfHasNext() {
     if (gameState.currentMissionIndex < missionsData.length - 1 && gameState.unlockedIndex > gameState.currentMissionIndex) {
         btnNext.classList.remove('hidden');
-        btnNext.textContent = "PROCEED TO NEXT MISSION";
+        btnNext.textContent = "NEXT PHASE";
     } else if (gameState.completedMissions.length === missionsData.length) {
         btnNext.classList.remove('hidden');
-        btnNext.textContent = "VIEW FINAL RESULTS";
+        btnNext.textContent = "VIEW DEBRIEF";
     } else {
         btnNext.classList.remove('hidden');
         btnNext.textContent = "RETURN TO DASHBOARD";
@@ -421,13 +505,9 @@ function checkIfHasNext() {
 }
 
 function loadNextMission() {
-    if (gameState.completedMissions.length === missionsData.length) {
-        endGame("completed");
-    } else if (gameState.currentMissionIndex < missionsData.length - 1 && gameState.unlockedIndex > gameState.currentMissionIndex) {
-        startGame(gameState.currentMissionIndex + 1);
-    } else {
-        returnToDashboard();
-    }
+    if (gameState.completedMissions.length === missionsData.length) endGame("completed");
+    else if (gameState.currentMissionIndex < missionsData.length - 1 && gameState.unlockedIndex > gameState.currentMissionIndex) startGame(gameState.currentMissionIndex + 1);
+    else returnToDashboard();
 }
 
 function endGame(reason) {
@@ -439,10 +519,6 @@ function endGame(reason) {
     gameView.classList.add('hidden');
     resultView.classList.remove('hidden');
 
-    const resultTitle = document.getElementById('result-title');
-    const resultMessage = document.getElementById('result-message');
-    const resultIcon = document.querySelector('.result-icon');
-
     document.getElementById('result-score').textContent = gameState.score.toString().padStart(4, '0');
     document.getElementById('result-completed').textContent = `${gameState.completedMissions.length}/${missionsData.length}`;
     
@@ -451,20 +527,19 @@ function endGame(reason) {
     document.getElementById('result-time').textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 
     if (reason === "timeout") {
-        resultTitle.textContent = "SYSTEM LOCKOUT";
-        resultMessage.textContent = "Time expired. The network administrators have detected your presence and locked you out.";
-        resultIcon.classList.add('failed');
-        resultIcon.innerHTML = `<svg viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>`;
+        document.getElementById('result-title').textContent = "SYSTEM LOCKOUT";
+        document.getElementById('result-message').textContent = "Time expired. The network administrators detected your presence.";
+        document.querySelector('.result-icon').style.stroke = "var(--neon-red)";
     } else {
-        resultTitle.textContent = "SIMULATION COMPLETE";
-        resultMessage.textContent = `Excellent work, Operative. You successfully navigated the network and completed ${gameState.completedMissions.length} out of ${missionsData.length} objectives.`;
-        resultIcon.classList.remove('failed');
-        resultIcon.innerHTML = `<svg viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>`;
+        document.getElementById('result-title').textContent = "OPERATION SUCCESSFUL";
+        document.getElementById('result-message').textContent = `Excellent work. You successfully investigated ${gameState.completedMissions.length} cases.`;
+        document.querySelector('.result-icon').style.stroke = "var(--neon-green)";
     }
 }
 
 function resetGameEntirely() {
     stopGlobalTimer();
+    const currentSound = gameState.soundEnabled;
     gameState = {
         score: 0,
         currentMissionIndex: 0,
@@ -474,10 +549,10 @@ function resetGameEntirely() {
         timeLeft: INITIAL_TIME,
         timerInterval: null,
         isGameOver: false,
-        timerStarted: false
+        timerStarted: false,
+        soundEnabled: currentSound
     };
     
-    navTimeContainer.classList.remove('warning', 'danger');
     resultView.classList.add('hidden');
     dashboardView.classList.remove('hidden');
     initDashboard();

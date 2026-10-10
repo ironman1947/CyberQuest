@@ -3,136 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberQuest | Secure Escape Room</title>
+    <title>CyberQuest | SOC Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div id="particles-bg"></div>
-    
-    <!-- GLOBAL TOP NAVIGATION -->
-    <nav class="top-nav">
-        <div class="brand">
-            <svg class="neon-icon" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                <circle cx="12" cy="16" r="1"></circle>
-            </svg>
-            <h1 class="brand-title">CYBERQUEST</h1>
-        </div>
-        <div class="player-stats">
-            <div class="stat-badge">
-                <span class="stat-label">BEST</span>
-                <span id="nav-best-score" class="stat-value">0000</span>
-            </div>
-            <div class="stat-badge">
-                <span class="stat-label">SCORE</span>
-                <span id="nav-score" class="stat-value">0000</span>
-            </div>
-            <div class="stat-badge">
-                <span class="stat-label">HINTS</span>
-                <span id="nav-hints" class="stat-value">3</span>
-            </div>
-            <div class="stat-badge alert-glow">
-                <span class="stat-label">TIME</span>
-                <span id="nav-time" class="stat-value">10:00</span>
-            </div>
-        </div>
-    </nav>
 
-    <!-- DASHBOARD VIEW -->
-    <div id="dashboard-view" class="dashboard-layout">
-        <main class="dashboard-main">
-            <header class="dashboard-header">
-                <h2 class="welcome-title">Welcome to the Grid</h2>
-                <p class="intro-text">Navigate through our secure cybersecurity escape room. You have 10 minutes and 3 hints to complete all 4 missions. Save your progress by beating the high score.</p>
-                
-                <div class="action-container">
-                    <button id="start-mission-btn" class="cyber-btn primary-btn">
-                        INITIALIZE MISSION
-                    </button>
-                    <div id="terminal-output" class="terminal-text">> System awaiting input...</div>
+    <div class="soc-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="soc-sidebar">
+            <div class="brand">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="var(--neon-cyan)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <h1>CQ_OS // SOC</h1>
+            </div>
+
+            <div class="stat-panel">
+                <div class="stat-row">
+                    <span class="stat-label">OP TIME</span>
+                    <span id="nav-time" class="stat-value timer">10:00</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">SCORE</span>
+                    <span id="nav-score" class="stat-value">0000</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">BEST</span>
+                    <span id="nav-best-score" class="stat-value">0000</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">INTEL (HINTS)</span>
+                    <span id="nav-hints" class="stat-value">3</span>
+                </div>
+            </div>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="case-timeline">
+                <h3>ACTIVE CASES</h3>
+                <ul id="timeline-list">
+                    <li class="timeline-item active">Phishing Intel</li>
+                    <li class="timeline-item">Auth Defense</li>
+                    <li class="timeline-item">Crypto Analysis</li>
+                    <li class="timeline-item">Log Audit</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="toggle-sound" class="icon-btn">
+                    <svg id="icon-sound-off" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                    <span class="btn-text">AUDIO: OFF</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="soc-main">
+            <!-- Topbar -->
+            <header class="soc-topbar">
+                <div class="topbar-left">
+                    <span class="system-status">SYS_STATUS: <span class="text-green">ONLINE</span></span>
+                </div>
+                <div class="topbar-right">
+                    <span class="agent-id">OP_ID: GHOST_PROTOCOL</span>
                 </div>
             </header>
 
-            <section id="missions-grid" class="missions-grid"></section>
+            <!-- DASHBOARD VIEW -->
+            <div id="dashboard-view" class="view-panel">
+                <div class="dashboard-grid">
+                    <div class="dash-intro panel">
+                        <h2 class="panel-title">THREAT INTELLIGENCE FEED</h2>
+                        <div class="terminal-box" id="dashboard-terminal">
+                            <p class="typewriter">> Incoming secure transmission...</p>
+                            <p class="typewriter">> Operation CyberQuest is ready for deployment.</p>
+                            <p class="typewriter">> Awaiting authorization to begin investigations.</p>
+                        </div>
+                        <button id="start-mission-btn" class="soc-btn primary-btn mt-2">
+                            AUTHORIZE OPERATION
+                        </button>
+                    </div>
+
+                    <div class="dash-missions panel">
+                        <h2 class="panel-title">INVESTIGATION LOGS</h2>
+                        <div id="missions-grid" class="missions-grid">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GAME VIEW (INVESTIGATION MODE) -->
+            <div id="game-view" class="view-panel hidden">
+                <div class="investigation-layout">
+                    <!-- Left Column: Evidence & Data -->
+                    <div class="evidence-panel panel">
+                        <div class="panel-header">
+                            <h2 class="panel-title">EVIDENCE CACHE: <span id="mission-progress">01/04</span></h2>
+                            <span id="game-reward" class="reward-tag">0 XP</span>
+                        </div>
+                        
+                        <h3 id="mission-title" class="mission-heading">Mission Title</h3>
+                        <p id="mission-desc" class="mission-instruction"></p>
+                        
+                        <div class="evidence-card">
+                            <div class="card-header">SECURE_DATA_STREAM</div>
+                            <div id="mission-scenario" class="scenario-content"></div>
+                        </div>
+
+                        <!-- Interactive Terminal -->
+                        <div class="terminal-panel">
+                            <div class="card-header">ANALYSIS_TERMINAL</div>
+                            <div class="terminal-ui" id="in-game-terminal">
+                                <div id="terminal-output-area" class="terminal-output-area">
+                                    <div class="term-line">> System initialized. Type 'help' for commands.</div>
+                                </div>
+                                <div class="terminal-input-area">
+                                    <span class="prompt-char">root@soc:~#</span>
+                                    <input type="text" id="terminal-input" autocomplete="off" placeholder="Enter command...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Analysis & Action -->
+                    <div class="action-panel panel">
+                        <h2 class="panel-title">ANALYSIS DECISION</h2>
+                        <p class="small-text mb-2">Based on the evidence and terminal inspection, formulate your conclusion.</p>
+                        
+                        <div id="options-container" class="options-list">
+                            <!-- Populated by JS -->
+                        </div>
+
+                        <div id="hint-container" class="hint-box hidden">
+                            <strong>[INTEL_DELIVERED]:</strong> <span id="hint-text"></span>
+                        </div>
+
+                        <div id="feedback-container" class="feedback-box hidden">
+                            <h3 id="feedback-title"></h3>
+                            <p id="feedback-text"></p>
+                        </div>
+
+                        <div class="action-buttons mt-auto">
+                            <button id="btn-hint" class="soc-btn ghost-btn">REQUEST INTEL</button>
+                            <button id="btn-submit" class="soc-btn primary-btn" disabled>EXECUTE DECISION</button>
+                            <button id="btn-next" class="soc-btn primary-btn hidden">NEXT PHASE</button>
+                            <button id="btn-dashboard" class="soc-btn danger-btn">ABORT OP</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULT VIEW -->
+            <div id="result-view" class="view-panel hidden">
+                <div class="result-panel panel text-center">
+                    <svg class="result-icon mb-2" viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="var(--neon-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <h2 id="result-title" class="mission-heading">OPERATION DEBRIEF</h2>
+                    <p id="result-message" class="mission-instruction mb-3">Metrics evaluated successfully.</p>
+                    
+                    <div class="result-stats">
+                        <div class="result-box">
+                            <span class="result-label">FINAL SCORE</span>
+                            <span id="result-score" class="result-val">0000</span>
+                        </div>
+                        <div class="result-box">
+                            <span class="result-label">INVESTIGATIONS</span>
+                            <span id="result-completed" class="result-val">0/4</span>
+                        </div>
+                        <div class="result-box">
+                            <span class="result-label">TIME EXP.</span>
+                            <span id="result-time" class="result-val">00:00</span>
+                        </div>
+                    </div>
+
+                    <button id="btn-restart" class="soc-btn primary-btn mt-3">REBOOT SYSTEM</button>
+                </div>
+            </div>
         </main>
     </div>
 
-    <!-- GAME VIEW -->
-    <div id="game-view" class="game-layout hidden">
-        <div class="game-panel">
-            <div class="game-header">
-                <div class="mission-header-info">
-                    <span id="mission-progress" class="mission-progress">MISSION 1 / 4</span>
-                    <h2 id="mission-title" class="mission-title">Mission Title</h2>
-                </div>
-                <div class="stat-badge">
-                    <span class="stat-label">REWARD</span>
-                    <span id="game-reward" class="stat-value">0 XP</span>
-                </div>
-            </div>
-            
-            <div class="game-body">
-                <p id="mission-desc" class="mission-instruction"></p>
-                
-                <div id="mission-scenario" class="scenario-box"></div>
-                
-                <div id="options-container" class="options-grid"></div>
-                
-                <div id="hint-container" class="hint-box hidden">
-                    <strong>SYSTEM HINT:</strong> <span id="hint-text"></span>
-                </div>
-                
-                <div id="feedback-container" class="feedback-box hidden">
-                    <h3 id="feedback-title"></h3>
-                    <p id="feedback-text"></p>
-                </div>
-            </div>
-            
-            <div class="game-actions">
-                <button id="btn-hint" class="cyber-btn secondary-btn">REQUEST HINT</button>
-                <button id="btn-submit" class="cyber-btn primary-btn" disabled>SUBMIT</button>
-                <button id="btn-next" class="cyber-btn primary-btn hidden">PROCEED TO NEXT</button>
-                <button id="btn-dashboard" class="cyber-btn ghost-btn">ABORT TO DASHBOARD</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- RESULT VIEW -->
-    <div id="result-view" class="dashboard-layout hidden">
-        <div class="result-panel">
-            <div class="result-icon">
-                <svg viewBox="0 0 24 24" width="80" height="80" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-            </div>
-            <h2 id="result-title" class="welcome-title">SIMULATION COMPLETE</h2>
-            <p id="result-message" class="intro-text">Evaluating performance metrics...</p>
-            
-            <div class="result-stats-grid">
-                <div class="result-stat-box">
-                    <span class="label">FINAL SCORE</span>
-                    <span id="result-score" class="value">0000</span>
-                </div>
-                <div class="result-stat-box">
-                    <span class="label">MISSIONS</span>
-                    <span id="result-completed" class="value">0/4</span>
-                </div>
-                <div class="result-stat-box">
-                    <span class="label">TIME LEFT</span>
-                    <span id="result-time" class="value">00:00</span>
-                </div>
-            </div>
-            
-            <div class="action-container" style="margin-top: 3rem;">
-                <button id="btn-restart" class="cyber-btn primary-btn">REBOOT SYSTEM</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/script.js" type="module"></script>
+    <script src="js/script.js" defer></script>
 </body>
 </html>
