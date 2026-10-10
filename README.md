@@ -47,8 +47,3 @@ Since CyberQuest is a completely static frontend application without a backend, 
 
 ---
 
-## 📸 Screenshots
-*(Add images here by placing them in your project folder and linking them like below)*
-- `![Dashboard](screenshot-dashboard.png)`
-- `![Mission View](screenshot-mission.png)`
-- `![Results Screen](screenshot-results.png)`
