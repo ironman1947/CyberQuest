@@ -3,9 +3,9 @@
 CyberQuest is an immersive, browser-based cybersecurity escape room built entirely with Vanilla web technologies. Test your skills through interactive puzzles ranging from phishing detection to network log analysis, all presented in a sleek, retro-futuristic "Cyber" dashboard. 
 
 ### 🏆 Team: Ghost Protocol
-- **Om Sivaleeshraman**
-- **Partil**
-- **Vedant Sahoo**
+- **Om Chougule**
+- **Shraman Patil**
+- **Vedant Salunkhe**
 
 ---
 
